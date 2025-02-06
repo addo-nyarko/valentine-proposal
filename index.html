@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine?</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #ffcccb;
+      text-align: center;
+      padding-top: 50px;
+      position: relative;
+    }
+    h1 {
+      color: #d63447;
+    }
+    .buttons {
+      margin-top: 20px;
+    }
+    #yesButton {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 32px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: transform 0.2s;
+    }
+    #noButton {
+      background-color: #f44336;
+      color: white;
+      padding: 15px 32px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      position: absolute;
+    }
+    #message {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      font-size: 18px;
+      color: #d63447;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Will You Be My Valentine?</h1>
+  <div class="buttons">
+    <button id="yesButton" onclick="acceptValentine()">Yes</button>
+    <button id="noButton" onmouseover="moveNoButton()">No</button>
+  </div>
+  <div id="message"></div>
+
+  <script>
+    let yesButtonSize = 16; // Initial font size for the "Yes" button
+    let noButtonClickCount = 0;
+    const beggingMessages = [
+      "Please say yes! 🥺",
+      "I'll be so sad if you say no! 😢",
+      "Just click yes, please! 🙏",
+      "You're breaking my heart! 💔",
+      "I'll do anything for a yes! 😭",
+      "Don't leave me hanging! 🥺",
+      "I'm begging you! Please! 🙏",
+      "You're my only Valentine! ❤️",
+      "I can't take no for an answer! 😭",
+      "Fine, I'll make it impossible to say no! 😤"
+    ];
+
+    function acceptValentine() {
+      window.location.href = "valentine-celebration.html"; // Redirect to the celebration page
+    }
+
+    function moveNoButton() {
+      noButtonClickCount++;
+      const noButton = document.getElementById('noButton');
+      const yesButton = document.getElementById('yesButton');
+      const message = document.getElementById('message');
+
+      // Show a begging message
+      if (noButtonClickCount <= beggingMessages.length) {
+        message.textContent = beggingMessages[noButtonClickCount - 1];
+        message.style.display = 'block';
+        setTimeout(() => {
+          message.style.display = 'none';
+        }, 3000); // Hide the message after 3 seconds
+      }
+
+      // Move the "No" button randomly
+      const x = Math.random() * (window.innerWidth - noButton.offsetWidth);
+      const y = Math.random() * (window.innerHeight - noButton.offsetHeight);
+      noButton.style.left = `${x}px`;
+      noButton.style.top = `${y}px`;
+
+      // Increase the size of the "Yes" button
+      yesButtonSize += 5;
+      yesButton.style.fontSize = `${yesButtonSize}px`;
+      yesButton.style.padding = `${yesButtonSize / 2}px ${yesButtonSize}px`;
+
+      // After 10 attempts, disable the "No" button
+      if (noButtonClickCount >= 10) {
+        noButton.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
